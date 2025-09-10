@@ -1,3 +1,5 @@
+@import "details";
+
 .dashlet-extensions {
   display: flex;
   flex-direction: column;
@@ -49,11 +51,11 @@
   }
 
   .extension-title {
-    @extend .h4;
+    font-size: $font-size-h4;
   }
 
   .extension-name {
-    @extend .h4;
+    font-size: $font-size-h4;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -88,5 +90,55 @@
     > div:not(:first-child) {
       margin-left: 16px;
     }
+  }
+}
+
+.extensions-dashlet {
+  .extension-list {
+    margin-top: $half-gutter;
+  }
+
+  .extension-entry {
+    padding: $half-gutter;
+    border-bottom: $border-width solid $border-color;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &.active {
+      background-color: rgba($brand-primary, 0.1);
+    }
+
+    &.inactive {
+      opacity: 0.6;
+    }
+  }
+
+  .extension-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $half-gutter;
+  }
+
+  .extension-name {
+    font-weight: bold;
+  }
+
+  .extension-version {
+    color: $text-color-disabled;
+    font-size: 0.9em;
+  }
+
+  .extension-description {
+    margin-top: $half-gutter;
+    margin-bottom: $half-gutter;
+  }
+
+  .extension-actions {
+    display: flex;
+    gap: $half-gutter;
+    margin-top: $half-gutter;
   }
 }
