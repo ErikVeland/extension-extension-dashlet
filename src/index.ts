@@ -5,10 +5,10 @@ import ExtensionsDashlet from './ExtensionsDashlet';
 
 function init(context: types.IExtensionContext): boolean {
   context.registerDashlet('Extensions', 1, 4, 100, ExtensionsDashlet, () => true,
-    () => ({}), {
-    closable: true,
-    fixed: false,
-  });
+                          () => ({}), {
+                            closable: true,
+                            fixed: false,
+                          });
 
   context.once(() => {
     context.api.setStylesheet('extensions-dashlet',

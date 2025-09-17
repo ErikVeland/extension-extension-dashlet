@@ -32,17 +32,17 @@ interface IExtensionsDashletState {
 
 class ExtensionsDashlet extends ComponentEx<IProps, IExtensionsDashletState> {
   private extensionsByModId = memoizeOne(extensions => extensions.reduce((prev, ext) => {
-      if (ext.modId !== undefined) {
-        prev[ext.modId] = ext;
-      }
-      return prev;
-    }, {}));
+    if (ext.modId !== undefined) {
+      prev[ext.modId] = ext;
+    }
+    return prev;
+  }, {}));
 
   private downloadsByFileId = memoizeOne((downloads: { [dlId: string]: types.IDownload }) => {
     const res: { [fileId: number]: string } =
       Object.keys(downloads ?? {}).reduce((prev, dlId: string) => {
         const nexusFileId = util.getSafe(downloads[dlId],
-          ['modInfo', 'nexus', 'ids', 'fileId'], undefined);
+                                         ['modInfo', 'nexus', 'ids', 'fileId'], undefined);
         if (nexusFileId !== undefined) {
           prev[nexusFileId] = dlId;
         }
@@ -212,7 +212,7 @@ class ExtensionsDashlet extends ComponentEx<IProps, IExtensionsDashletState> {
   private sendEndorse(extId: string, targetState: string) {
     const { installed, onSetExtensionEndorsed } = this.props;
     this.context.api.emitAndAwait('endorse-nexus-mod',
-      'site', installed[extId].modId, installed[extId].version, targetState)
+                                  'site', installed[extId].modId, installed[extId].version, targetState)
       .then((endorsed: string[]) => {
         onSetExtensionEndorsed(extId, endorsed[0]);
       })
