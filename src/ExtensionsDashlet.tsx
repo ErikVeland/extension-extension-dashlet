@@ -190,11 +190,23 @@ class ExtensionsDashlet extends ComponentEx<IProps, IExtensionsDashletState> {
     if (ext !== undefined) {
       this.context.api.emitAndAwait('install-extension', ext)
         .then(() => {
+          // Create a more specific message based on the extension type
+          let message = 'Extension installed successfully!';
+          if (ext.type === 'game') {
+            message += ' The game is now available in the Managed Games section.';
+          } else {
+            message += ' Please restart Vortex to enable it.';
+          }
           this.context.api.sendNotification({
             type: 'success',
-            message: 'Extension installed, please restart Vortex to enable it',
-            displayMS: 2000,
+            message: message,
+            displayMS: 5000,
           });
+          
+          // For game extensions, trigger a refresh of the game list
+          if (ext.type === 'game') {
+            this.context.api.events.emit('refresh-game-list');
+          }
         });
     }
   }
